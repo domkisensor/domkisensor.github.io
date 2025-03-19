@@ -1,5 +1,0 @@
-# Ignore all YAML files
-*.yml
-
-# OR ignore a specific YAML file
-secrets.yml
