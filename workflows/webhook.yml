@@ -10,21 +10,13 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.client_payload.branch }}
 
-      - name: Display Webhook Data
+      - name: Save Webhook Message
         run: |
-          echo "Received Message: ${{ github.event.client_payload.message }}"
-          echo "Deploying Version: ${{ github.event.client_payload.version }}"
-
-      - name: Build Site
-        run: |
-          # Your build steps here (e.g., Jekyll, Hugo, Next.js)
-          echo "Building site..."
+          echo '{ "message": "${{ github.event.client_payload.message }}" }' > public/message.json
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.WEBHOOK }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
