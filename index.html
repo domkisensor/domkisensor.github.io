@@ -1,7 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook Message</title>
+    <script>
+        async function fetchMessage() {
+            try {
+                let response = await fetch('message.json');
+                let data = await response.json();
+                document.getElementById('webhook-message').innerText = data.message;
+            } catch (error) {
+                console.error("Error loading message:", error);
+            }
+        }
+        window.onload = fetchMessage;
+    </script>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <h1>Latest Webhook Message:</h1>
+    <p id="webhook-message">Waiting for message...</p>
 </body>
 </html>
