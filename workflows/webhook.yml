@@ -1,0 +1,30 @@
+name: Deploy GitHub Pages
+
+on:
+  repository_dispatch:
+    types: [webhook-event]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.branch }}
+
+      - name: Display Webhook Data
+        run: |
+          echo "Received Message: ${{ github.event.client_payload.message }}"
+          echo "Deploying Version: ${{ github.event.client_payload.version }}"
+
+      - name: Build Site
+        run: |
+          # Your build steps here (e.g., Jekyll, Hugo, Next.js)
+          echo "Building site..."
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
